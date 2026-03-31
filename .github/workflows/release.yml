@@ -28,6 +28,9 @@ on:
         type: string
         required: false
         default: ".release-please-manifest.json"
+      autodoc:
+        type: boolean
+        default: false
     outputs:
       # for backward compatibility
       release_created:
@@ -163,3 +166,10 @@ jobs:
           git tag -a "v$RELEASE_MAJOR.$RELEASE_MINOR" -m "chore(release): v$RELEASE_MAJOR.$RELEASE_MINOR"
           git push origin "v$RELEASE_MAJOR"
           git push origin "v$RELEASE_MAJOR.$RELEASE_MINOR"
+
+      - id: autodoc
+        if: ${{ inputs.autodoc && steps.release-output.outputs.prs_created && steps.release-output.outputs.prs_created != 'false' }}
+        shell: bash
+        run: |
+          
+          echo "foo"
